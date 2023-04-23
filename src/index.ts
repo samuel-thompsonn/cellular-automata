@@ -5,7 +5,7 @@ import BoardImpl from './BoardImpl'
 import CellularAutomatonImpl from './CellularAutomatonImpl'
 import RockPaperScissorsCell from './RockPaperScissorsCell'
 
-const BOARD_SIZE = 20
+const BOARD_SIZE = 60
 const BOARD_WIDTH = BOARD_SIZE
 const BOARD_HEIGHT = BOARD_SIZE
 const CANVAS_SIZE = 400
