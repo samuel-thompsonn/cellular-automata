@@ -1,16 +1,16 @@
-import printMe from './print'
+import * as P5 from 'p5'
+import CellularAutomatonImpl from './CellularAutomatonImpl'
 
-function component (): HTMLDivElement {
-  const element = document.createElement('div')
-  const button = document.createElement('button')
+const cellularAutomaton = new CellularAutomatonImpl()
 
-  element.innerHTML = 'Hello webpack'
-  button.innerHTML = 'Click me and check the console!'
-  button.onclick = printMe
+export const sketch = (p5: P5): void => {
+  p5.setup = () => {
+    cellularAutomaton.setup(p5)
+  }
 
-  element.appendChild(button)
-
-  return element
+  p5.draw = () => {
+    cellularAutomaton.draw(p5)
+  }
 }
 
-document.body.appendChild(component())
+export const myP5 = new P5(sketch, document.body)
