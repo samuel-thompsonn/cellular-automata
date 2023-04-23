@@ -20,9 +20,9 @@ const RPS_THRESHOLD = 3 / 8
 
 function stateColorsMap (): Map<number, Color> {
   const stateColorsMap = new Map()
-  stateColorsMap.set(0, { red: 200, green: 0, blue: 0 })
-  stateColorsMap.set(1, { red: 0, green: 200, blue: 0 })
-  stateColorsMap.set(2, { red: 0, green: 0, blue: 200 })
+  stateColorsMap.set(0, { red: 109, green: 212, blue: 126 })
+  stateColorsMap.set(1, { red: 255, green: 213, blue: 90 })
+  stateColorsMap.set(2, { red: 41, green: 50, blue: 80 })
   return stateColorsMap
 }
 
