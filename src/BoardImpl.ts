@@ -1,6 +1,8 @@
 import type * as P5 from 'p5'
 import type Board from './Board'
 import type Cell from './Cell'
+import type Neighborhood from './Neighborhood'
+import NeighborhoodImpl from './NeighborhoodImpl'
 
 export default class BoardImpl implements Board {
   width: number
@@ -64,7 +66,23 @@ export default class BoardImpl implements Board {
   }
 
   updateSelf (): void {
+    this.forEachCell((i, j, cell) => {
+      cell.determineNextState(this.getCellNeighborhood(i, j))
+    })
+    this.forEachCell((i, j, cell) => { cell.updateToNextState() })
+  }
 
+  getCellNeighborhood (i: number, j: number): Neighborhood {
+    const neighboringCells = []
+    for (let k = i - 1; k <= i + 1; k += 1) {
+      for (let l = j - 1; l <= j + 1; l += 1) {
+        const cell = this.getCellAt(k, l)
+        if ((k !== i || l !== j) && cell !== undefined) {
+          neighboringCells.push(cell)
+        }
+      }
+    }
+    return new NeighborhoodImpl(neighboringCells)
   }
 
   forEachCell (cellConsumer: (i: number, j: number, cell: Cell) => void): void {

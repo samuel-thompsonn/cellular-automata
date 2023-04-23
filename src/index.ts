@@ -5,7 +5,7 @@ import BoardImpl from './BoardImpl'
 import CellularAutomatonImpl from './CellularAutomatonImpl'
 import RockPaperScissorsCell from './RockPaperScissorsCell'
 
-const BOARD_SIZE = 10
+const BOARD_SIZE = 20
 const BOARD_WIDTH = BOARD_SIZE
 const BOARD_HEIGHT = BOARD_SIZE
 const CANVAS_SIZE = 400
@@ -16,6 +16,7 @@ const BOARD_STROKE_WEIGHT = 1
 const BOARD_STROKE_VALUE = 0
 const STATES_LIST = [0, 1, 2]
 const STATE_COLORS = stateColorsMap()
+const RPS_THRESHOLD = 3 / 8
 
 function stateColorsMap (): Map<number, Color> {
   const stateColorsMap = new Map()
@@ -34,7 +35,7 @@ function createCells (width: number, height: number, statesList: any[]): Cell[][
   for (let i = 0; i < height; i++) {
     const row = []
     for (let j = 0; j < width; j++) {
-      row.push(new RockPaperScissorsCell(randomSampleFromList(statesList), STATE_COLORS))
+      row.push(new RockPaperScissorsCell(randomSampleFromList(statesList), STATE_COLORS, RPS_THRESHOLD))
     }
     cells.push(row)
   }

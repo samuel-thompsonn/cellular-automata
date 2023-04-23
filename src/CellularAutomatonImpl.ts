@@ -63,12 +63,17 @@ import type * as P5 from 'p5'
 //     return slider
 // }
 
+function initializeButton (buttonText: string, onPressed: () => void, x: number, y: number, p5: P5): void {
+  const newButton = p5.createButton(buttonText)
+  newButton.position(x, y)
+  newButton.mousePressed(onPressed)
+}
+
 export default class CellularAutomatonImpl implements CellularAutomaton {
   canvasWidth: number
   canvasHeight: number
   backgroundValue: number
   board: Board
-  updateButton: P5.Element
 
   constructor (board: Board, canvasWidth: number, canvasHeight: number, backgroundValue: number) {
     this.board = board
@@ -80,6 +85,7 @@ export default class CellularAutomatonImpl implements CellularAutomaton {
   setup (p5: P5): void {
     p5.createCanvas(this.canvasWidth, this.canvasHeight)
     p5.background(this.backgroundValue)
+    initializeButton('Update', () => { this.board.updateSelf() }, this.canvasWidth + 10, 30, p5)
   }
 
   draw (p5: P5): void {
