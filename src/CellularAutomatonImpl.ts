@@ -1,14 +1,6 @@
-// import Board from './Board'
+import type Board from './Board'
 import type CellularAutomaton from './CellularAutomaton'
 import type * as P5 from 'p5'
-
-const CANVAS_SIZE = 400
-const CANVAS_WIDTH = CANVAS_SIZE
-const CANVAS_HEIGHT = CANVAS_SIZE
-// const BOARD_SIZE = 10
-// const BOARD_WIDTH = BOARD_SIZE
-// const BOARD_HEIGHT = BOARD_SIZE
-const BACKGROUND_VALUE = 220
 
 // const MILLISECONDS_PER_SECOND = 1000
 // const MIN_RUN_UPDATES_PER_SECOND = 1
@@ -72,16 +64,26 @@ const BACKGROUND_VALUE = 220
 // }
 
 export default class CellularAutomatonImpl implements CellularAutomaton {
-  // board: Board
+  canvasWidth: number
+  canvasHeight: number
+  backgroundValue: number
+  board: Board
   updateButton: P5.Element
 
+  constructor (board: Board, canvasWidth: number, canvasHeight: number, backgroundValue: number) {
+    this.board = board
+    this.canvasWidth = canvasWidth
+    this.canvasHeight = canvasHeight
+    this.backgroundValue = backgroundValue
+  }
+
   setup (p5: P5): void {
-    p5.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT)
-    p5.background(BACKGROUND_VALUE)
+    p5.createCanvas(this.canvasWidth, this.canvasHeight)
+    p5.background(this.backgroundValue)
   }
 
   draw (p5: P5): void {
-    p5.background(BACKGROUND_VALUE)
-    // this.board.drawSelf(p5)
+    p5.background(this.backgroundValue)
+    this.board.drawSelf(this.canvasWidth, this.canvasHeight, 0, 0, p5)
   }
 }
