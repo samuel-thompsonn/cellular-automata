@@ -1,4 +1,5 @@
-export default interface Neighborhood<Type> {
-  forEach: (consumer: (cell: Type) => void) => void
-  getTopElementByComparator: (comparator: (elementA: Type, elementB: Type) => number) => Type
+export default interface Neighborhood<CellType> {
+  forEach: (consumer: (cell: CellType) => void) => void
+  getTopElementByComparator: (comparator: (elementA: CellType, elementB: CellType) => number) => CellType
+  getRandomElement: () => CellType
 }

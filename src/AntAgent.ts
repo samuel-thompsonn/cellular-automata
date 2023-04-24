@@ -6,12 +6,14 @@ export default class AntAgent implements Agent {
   currentCell: TraversableCell
   destinationCell: TraversableCell | undefined
 
-  constructor () {
+  constructor (startingCell: TraversableCell) {
+    this.currentCell = startingCell
     this.destinationCell = undefined
   }
 
   determineNextAction (neighborhood: Neighborhood<TraversableCell>): void {
-    this.destinationCell = neighborhood.getTopElementByComparator(() => Math.random() - 0.50)
+    // this.destinationCell = neighborhood.getTopElementByComparator(() => Math.random() - 0.50)
+    this.destinationCell = neighborhood.getRandomElement()
   }
 
   executeUpdate (): void {

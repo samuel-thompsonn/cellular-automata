@@ -2,12 +2,16 @@ import type Neighborhood from './Neighborhood'
 import type * as P5 from 'p5'
 import type Agent from './Agent'
 import type Cell from './Cell'
+import AntAgent from './AntAgent'
 
 export default class AntCell implements Cell {
   ants: Agent[]
 
   constructor () {
     this.ants = []
+    if (Math.random() > 0.96) {
+      this.ants.push(new AntAgent(this))
+    }
   }
 
   getState (): number {
@@ -16,7 +20,11 @@ export default class AntCell implements Cell {
 
   drawSelf (pixelWidth: number, pixelHeight: number, x: number, y: number, p5: P5): void {
     p5.noStroke()
-    p5.fill(p5.color(10, 10, 10))
+    if (this.ants.length > 0) {
+      p5.fill(255, 200, 0)
+    } else {
+      p5.fill(p5.color(10, 10, 10))
+    }
     p5.rect(x, y, pixelWidth, pixelHeight)
   }
 
@@ -24,11 +32,9 @@ export default class AntCell implements Cell {
     this.ants.forEach((ant) => { ant.determineNextAction(neighborhood) })
   }
 
-  etermineNextState (neighborhood: Neighborhood<Cell>): void {
-    this.ants.forEach((ant) => { ant.determineNextAction(neighborhood) })
+  updateToNextState (): void {
+    this.ants.forEach((ant) => { ant.executeUpdate() })
   }
-
-  updateToNextState (): void {}
 
   // Throws an error if the move cannot be carried out
   attemptMove (agent: Agent): void {

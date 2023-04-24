@@ -1,9 +1,9 @@
 import * as P5 from 'p5'
 import type UpdatableCell from './UpdatableCell'
-import type Color from './Color'
+// import type Color from './Color'
 import BoardImpl from './BoardImpl'
 import CellularAutomatonImpl from './CellularAutomatonImpl'
-import RockPaperScissorsCell from './RockPaperScissorsCell'
+import AntCell from './AntCell'
 
 const BOARD_SIZE = 60
 const BOARD_WIDTH = BOARD_SIZE
@@ -15,27 +15,23 @@ const BACKGROUND_VALUE = 220
 const BOARD_STROKE_WEIGHT = 1
 const BOARD_STROKE_VALUE = 0
 const STATES_LIST = [0, 1, 2]
-const STATE_COLORS = stateColorsMap()
-const RPS_THRESHOLD = 3 / 8
+// const STATE_COLORS = stateColorsMap()
+// const RPS_THRESHOLD = 3 / 8
 
-function stateColorsMap (): Map<number, Color> {
-  const stateColorsMap = new Map()
-  stateColorsMap.set(0, { red: 109, green: 212, blue: 126 })
-  stateColorsMap.set(1, { red: 255, green: 213, blue: 90 })
-  stateColorsMap.set(2, { red: 41, green: 50, blue: 80 })
-  return stateColorsMap
-}
-
-function randomSampleFromList (list: any[]): any {
-  return Math.floor(Math.random() * list.length)
-}
+// function stateColorsMap (): Map<number, Color> {
+//   const stateColorsMap = new Map()
+//   stateColorsMap.set(0, { red: 109, green: 212, blue: 126 })
+//   stateColorsMap.set(1, { red: 255, green: 213, blue: 90 })
+//   stateColorsMap.set(2, { red: 41, green: 50, blue: 80 })
+//   return stateColorsMap
+// }
 
 function createCells (width: number, height: number, statesList: any[]): UpdatableCell[][] {
   const cells = []
   for (let i = 0; i < height; i++) {
     const row = []
     for (let j = 0; j < width; j++) {
-      row.push(new RockPaperScissorsCell(randomSampleFromList(statesList), STATE_COLORS, RPS_THRESHOLD))
+      row.push(new AntCell())
     }
     cells.push(row)
   }
