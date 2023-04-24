@@ -1,5 +1,4 @@
-import type Cell from './Cell'
-
-export default interface Neighborhood {
-  forEach: (cellConsumer: (cell: Cell) => void) => void
+export default interface Neighborhood<Type> {
+  forEach: (consumer: (cell: Type) => void) => void
+  getTopElementByComparator: (comparator: (elementA: Type, elementB: Type) => number) => Type
 }

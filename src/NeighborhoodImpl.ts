@@ -1,14 +1,18 @@
-import type Cell from './Cell'
 import type Neighborhood from './Neighborhood'
 
-export default class NeighborhoodImpl implements Neighborhood {
-  cells: Cell[]
+export default class NeighborhoodImpl<Type> implements Neighborhood<Type> {
+  elements: Type[]
 
-  constructor (cells: Cell[]) {
-    this.cells = cells
+  constructor (elements: Type[]) {
+    this.elements = elements
   }
 
-  forEach (cellConsumer: (cell: Cell) => void): void {
-    this.cells.forEach((cell) => { cellConsumer(cell) })
+  forEach (consumer: (element: Type) => void): void {
+    this.elements.forEach((element) => { consumer(element) })
+  }
+
+  getTopElementByComparator (comparator: (elementA: Type, elementB: Type) => number): Type {
+    this.elements.sort(comparator)
+    return this.elements[0]
   }
 }

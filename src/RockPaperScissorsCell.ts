@@ -1,9 +1,9 @@
 import type * as P5 from 'p5'
-import type Cell from './Cell'
+import type UpdatableCell from './UpdatableCell'
 import type Color from './Color'
 import type Neighborhood from './Neighborhood'
 
-function proportionInNeighborhoodWithState (neighborhood: Neighborhood, stateIndex: number): number {
+function proportionInNeighborhoodWithState (neighborhood: Neighborhood<UpdatableCell>, stateIndex: number): number {
   let numberWithState = 0
   let totalCount = 0
   neighborhood.forEach((cell) => {
@@ -15,7 +15,7 @@ function proportionInNeighborhoodWithState (neighborhood: Neighborhood, stateInd
   return numberWithState / totalCount
 }
 
-export default class RockPaperScissorsCell implements Cell {
+export default class RockPaperScissorsCell implements UpdatableCell {
   stateColors: Map<number, Color>
   stateIndex: number
   nextStateIndex: number
@@ -42,7 +42,7 @@ export default class RockPaperScissorsCell implements Cell {
     p5.rect(x, y, pixelWidth, pixelHeight)
   }
 
-  determineNextState (neighborhood: Neighborhood): void {
+  determineNextState (neighborhood: Neighborhood<UpdatableCell>): void {
     const targetState = (this.stateIndex + 1) % 3
     if (proportionInNeighborhoodWithState(neighborhood, targetState) >= this.rpsThreshold) {
       this.nextStateIndex = targetState

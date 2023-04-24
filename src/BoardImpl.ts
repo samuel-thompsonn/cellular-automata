@@ -1,6 +1,6 @@
 import type * as P5 from 'p5'
 import type Board from './Board'
-import type Cell from './Cell'
+import type UpdatableCell from './UpdatableCell'
 import type Neighborhood from './Neighborhood'
 import NeighborhoodImpl from './NeighborhoodImpl'
 
@@ -9,9 +9,9 @@ export default class BoardImpl implements Board {
   height: number
   strokeWeight: number
   strokeValue: number
-  cells: Cell[][]
+  cells: UpdatableCell[][]
 
-  constructor (width: number, height: number, strokeWeight: number, strokeValue: number, cells: Cell[][]) {
+  constructor (width: number, height: number, strokeWeight: number, strokeValue: number, cells: UpdatableCell[][]) {
     this.width = width
     this.height = height
     this.strokeWeight = strokeWeight
@@ -72,7 +72,7 @@ export default class BoardImpl implements Board {
     this.forEachCell((i, j, cell) => { cell.updateToNextState() })
   }
 
-  getCellNeighborhood (i: number, j: number): Neighborhood {
+  getCellNeighborhood (i: number, j: number): Neighborhood<UpdatableCell> {
     const neighboringCells = []
     for (let k = i - 1; k <= i + 1; k += 1) {
       for (let l = j - 1; l <= j + 1; l += 1) {
@@ -85,7 +85,7 @@ export default class BoardImpl implements Board {
     return new NeighborhoodImpl(neighboringCells)
   }
 
-  forEachCell (cellConsumer: (i: number, j: number, cell: Cell) => void): void {
+  forEachCell (cellConsumer: (i: number, j: number, cell: UpdatableCell) => void): void {
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         const cell = this.getCellAt(i, j)
@@ -100,7 +100,7 @@ export default class BoardImpl implements Board {
      * This behavior should be modular since this is what determines
      * things like wrapping around.
      */
-  getCellAt (i: number, j: number): Cell | undefined {
+  getCellAt (i: number, j: number): UpdatableCell | undefined {
     if (i >= 0 && i < this.height && j >= 0 && j < this.width) {
       return this.cells[i][j]
     }

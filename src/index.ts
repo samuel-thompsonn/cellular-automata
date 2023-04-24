@@ -1,5 +1,5 @@
 import * as P5 from 'p5'
-import type Cell from './Cell'
+import type UpdatableCell from './UpdatableCell'
 import type Color from './Color'
 import BoardImpl from './BoardImpl'
 import CellularAutomatonImpl from './CellularAutomatonImpl'
@@ -30,7 +30,7 @@ function randomSampleFromList (list: any[]): any {
   return Math.floor(Math.random() * list.length)
 }
 
-function createCells (width: number, height: number, statesList: any[]): Cell[][] {
+function createCells (width: number, height: number, statesList: any[]): UpdatableCell[][] {
   const cells = []
   for (let i = 0; i < height; i++) {
     const row = []
