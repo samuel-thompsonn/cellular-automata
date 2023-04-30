@@ -1,55 +1,9 @@
-import type Neighborhood from './Neighborhood'
-import type * as P5 from 'p5'
-import type Agent from './Agent'
-import type Cell from './Cell'
-import AntAgent from './AntAgent'
+import type Pheromone from './Pheromone'
+import type TraversableCell from './TraversableCell'
 
-export default class AntCell implements Cell {
-  ants: Agent[]
-
-  constructor () {
-    this.ants = []
-    if (Math.random() > 0.96) {
-      this.ants.push(new AntAgent(this))
-    }
-  }
-
-  getState (): number {
-    return 0
-  }
-
-  drawSelf (pixelWidth: number, pixelHeight: number, x: number, y: number, p5: P5): void {
-    p5.noStroke()
-    if (this.ants.length > 0) {
-      p5.fill(255, 200, 0)
-    } else {
-      p5.fill(p5.color(10, 10, 10))
-    }
-    p5.rect(x, y, pixelWidth, pixelHeight)
-  }
-
-  determineNextState (neighborhood: Neighborhood<Cell>): void {
-    this.ants.forEach((ant) => { ant.determineNextAction(neighborhood) })
-  }
-
-  updateToNextState (): void {
-    this.ants.forEach((ant) => { ant.executeUpdate() })
-  }
-
-  // Throws an error if the move cannot be carried out
-  attemptMove (agent: Agent): void {
-    if (this.ants.includes(agent)) {
-      throw new Error('An agent is attempting to move to this cell but is already here!')
-    }
-    this.ants.push(agent)
-  }
-
-  leaveCell (agent: Agent): void {
-    const agentIndex = this.ants.findIndex((agentInList) => agentInList === agent)
-    if (agentIndex !== -1) {
-      this.ants.splice(agentIndex, 1)
-    } else {
-      throw new Error('An agent is attempting to leave a cell it is not part of!')
-    }
-  }
+export default interface AntCell extends TraversableCell {
+  addPheromone: (pheremoneType: Pheromone, value: number) => void
+  getPheromoneValue: (pheromoneType: Pheromone) => number
+  addFood: (foodAmount: number) => void
+  removeFood: (foodAmount: number) => void
 }

@@ -3,9 +3,9 @@ import type UpdatableCell from './UpdatableCell'
 // import type Color from './Color'
 import BoardImpl from './BoardImpl'
 import CellularAutomatonImpl from './CellularAutomatonImpl'
-import AntCell from './AntCell'
+import AntCellImpl from './AntCellImpl'
 
-const BOARD_SIZE = 60
+const BOARD_SIZE = 30
 const BOARD_WIDTH = BOARD_SIZE
 const BOARD_HEIGHT = BOARD_SIZE
 const CANVAS_SIZE = 400
@@ -27,11 +27,23 @@ const STATES_LIST = [0, 1, 2]
 // }
 
 function createCells (width: number, height: number, statesList: any[]): UpdatableCell[][] {
+  const nestCoordinates = {
+    row: Math.floor(Math.random() * height),
+    column: Math.floor(Math.random() * width)
+  }
   const cells = []
   for (let i = 0; i < height; i++) {
     const row = []
     for (let j = 0; j < width; j++) {
-      row.push(new AntCell())
+      if (i === nestCoordinates.row && j === nestCoordinates.column) {
+        row.push(new AntCellImpl(1))
+      } else {
+        if (Math.random() > 0.01) {
+          row.push(new AntCellImpl())
+        } else {
+          row.push(new AntCellImpl(2))
+        }
+      }
     }
     cells.push(row)
   }

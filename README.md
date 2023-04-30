@@ -8,6 +8,10 @@ https://webpack.js.org/guides/output-management/#cleaning-up-the-dist-folder
 
 ### Ants
 
+https://courses.cs.duke.edu/spring23/compsci308/assign/02_simulation/part3_BQ7.php
+https://cs.gmu.edu/~eclab/projects/mason/publications/alife04ant.pdf
+https://greenteapress.com/complexity/html/thinkcomplexity013.html
+
 In the simulation, we will see ants explore an environment and find food, using pheremones to form an ant trail from the food back to their nest.
 
 An ant moves each update. If it doesn't have food, it attempts to move towards food. If it has food, it attempts to move toward home. It determines the location of home and food by reading pheremones left on the tiles in its neighborhood, and it deposits pheromone onto its own tile to help itself and others track down food and bring it home.
@@ -33,6 +37,8 @@ It picks the highest tile by this sorting system and moves to it each turn. Once
 ### Executing an agent move
 
 Each cell has a list of Agents. On each update, the cell tells its Agents to update, giving it a list of Cells for information as well as an interface on Cells that allow it to queue up a move. In the execution phase, the cell can determine whether the move can take place, and if it can, the Agent moves, notifying its previous owner cell that it is no longer present.
+
+I feel unhappy about the Agent having to BOTH leave its old cell and join its new cell. I wonder if there is some kind of interface I could expose that just lets it move itself by expressing the cell where it would like to go from its neighborhood? For now I guess I can make a method / abstract implementation for Agent that puts these in a single method and doesn't expose the individual movement interface from cells.
 
 ### Cell typing
 
